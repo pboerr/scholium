@@ -1,0 +1,20 @@
+{
+  "name": "scholium",
+  "owner": {
+    "name": "Francisco Boerr",
+    "url": "https://github.com/pboerr"
+  },
+  "description": "A Socratic mathematics instructor for proof-based coursework.",
+  "plugins": [
+    {
+      "name": "scholium",
+      "source": "./plugins/scholium",
+      "description": "A university mathematics instructor for proof-based upper-division and graduate coursework: lectures with motivation and hypothesis analysis, escalating hints that do not spoil problems, proof critique that classifies gaps versus errors, and verified problem sets.",
+      "version": "0.1.0",
+      "author": { "name": "Francisco Boerr" },
+      "homepage": "https://github.com/pboerr/scholium",
+      "license": "MIT",
+      "keywords": ["mathematics", "proofs", "tutoring", "education", "graduate", "socratic"]
+    }
+  ]
+}

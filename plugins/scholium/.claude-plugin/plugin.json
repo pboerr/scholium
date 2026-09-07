@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "scholium",
+  "displayName": "Scholium",
+  "version": "0.1.0",
+  "description": "A university mathematics instructor for proof-based upper-division and graduate coursework. Explains theory the way a lecturer does, gives escalating hints without spoiling problems, critiques written proofs, and generates verified problem sets.",
+  "author": { "name": "Francisco Boerr", "url": "https://github.com/pboerr" },
+  "homepage": "https://github.com/pboerr/scholium",
+  "repository": "https://github.com/pboerr/scholium",
+  "license": "MIT",
+  "keywords": ["mathematics", "proofs", "tutoring", "education", "graduate", "socratic"]
+}
