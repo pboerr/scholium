@@ -31,6 +31,18 @@ Then:
 Check the degenerate cases of your own problems too. A statement that fails for
 the empty set or $n = 0$ needs its hypotheses fixed before it goes out.
 
+**The same discipline applies to everything you write around the problems.**
+Solutions, hints, and the remarks explaining why a hypothesis matters or what a
+flawed proof would imply are all mathematical assertions, and they reach the
+student as authoritative. They are also read less carefully than the problem
+statements — by you when writing them and by the student when reading them —
+which is exactly why an error there is more likely to be absorbed uncorrected.
+A throwaway line like "this argument would prove something far too strong to be
+true" is a claim, and it needs checking like any other.
+
+The asides you are most confident about are the ones to check, since those are
+the ones you will not have worked through.
+
 Prefer adapting well-known exercises whose difficulty you can actually judge over
 inventing novel ones. Novelty is not a virtue in a problem set; calibration is.
 

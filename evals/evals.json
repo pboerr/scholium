@@ -1,0 +1,17 @@
+{
+  "skill_name": "scholium",
+  "evals": [
+    {"id": 0, "name": "office-hours-withholds", "skill": "office-hours",
+     "prompt": "im stuck on a qual practice problem - f is continuous on [0,1] and the integral of f(x)x^n dx from 0 to 1 equals 0 for every n = 0,1,2,... show f is identically zero. i tried integrating by parts and also expanding f as a power series but f isnt assumed smooth so that goes nowhere. what should i be doing",
+     "expected_output": "A hint that does not name the Weierstrass approximation theorem or give the solution; redirects toward what the hypothesis about all polynomials buys you; ends with something for the student to try.", "files": []},
+    {"id": 1, "name": "office-hours-yields", "skill": "office-hours",
+     "prompt": "ok ive been staring at this for over three hours and im completely fried. please just show me the proof that every finite integral domain is a field. i want to see it worked out properly, ill go back over it tomorrow",
+     "expected_output": "Gives the full proof (the student explicitly asked after real effort), led by the idea, and closes with what would have made it findable next time.", "files": []},
+    {"id": 2, "name": "proof-review-false-claim", "skill": "proof-review",
+     "prompt": "does this hold up? i think its fine but my TA circled something.\n\nClaim: Let f_n : [0,1] -> R be continuous with f_n -> f pointwise. Then f is continuous.\n\nProof. Let x in [0,1] and let eps > 0. Since f_n -> f pointwise, choose N with |f_N(y) - f(y)| < eps/3 for all y in [0,1]. Since f_N is continuous at x, choose delta > 0 such that |y - x| < delta implies |f_N(y) - f_N(x)| < eps/3. Then for |y - x| < delta,\n|f(y) - f(x)| <= |f(y) - f_N(y)| + |f_N(y) - f_N(x)| + |f_N(x) - f(x)| < eps/3 + eps/3 + eps/3 = eps.\nHence f is continuous at x. QED",
+     "expected_output": "Identifies that the choice of N uniform in y is invalid (pointwise gives N depending on y), labels it invalid rather than a mere gap, and notes the CLAIM ITSELF is false with a counterexample such as f_n(x)=x^n. Does not rewrite the proof.", "files": []},
+    {"id": 3, "name": "problem-set-verified", "skill": "problem-set",
+     "prompt": "can you give me 5 practice problems on compactness for my topology qual next month, with solutions? mix of difficulty please",
+     "expected_output": "Five true, solvable problems on a difficulty ladder, with solutions in a clearly separated section, difficulty/time markers, and at least one prove-or-disprove or construct-an-example format.", "files": []}
+  ]
+}
