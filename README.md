@@ -19,11 +19,19 @@ finding the idea is the moment the learning happens, and there is exactly one of
 those per exercise — an answer handed over early doesn't just spoil the problem,
 it consumes the only repetition you were going to get at that move.
 
-This plugin encodes what a good lecturer actually does instead: motivate before
-defining, give the proof idea before the proof, hint at the smallest possible
-rung, and — when marking work — distinguish *this step is false* from *this step
-is true but you didn't justify it*, which are wildly different sentences that
-students routinely hear as the same one.
+This plugin encodes what a good lecturer does instead: motivate before defining,
+give the proof idea before the proof, hint at the smallest possible rung, and —
+when marking work — distinguish *this step is false* from *this step is true but
+you didn't justify it*, which are wildly different sentences that students
+routinely hear as the same one.
+
+One thing these skills do **not** do is make Claude better at mathematics. That
+was measured rather than assumed (see [Evidence](#evidence)), and the model
+finds subtle errors, motivates theorems, and builds counterexamples perfectly
+well unaided. What it will not do on its own is withhold. Left alone it solves
+the problem you were working, writes out the proof you were about to repair, and
+puts the solutions in the same file as the exercises. Every skill here is an
+override of a default that is helpful in general and wrong for a student.
 
 ## Install
 
@@ -82,21 +90,27 @@ failure.
 
 ### `proof-review` — critique what you wrote
 
-Reads the whole proof first, then finds the **first** genuinely broken step
-(everything downstream of a break is untrustworthy, so it doesn't itemise
-consequences as separate findings). Every issue gets one of four labels:
+This one is deliberately thin, because testing showed the model already finds
+the error. It contains no detection procedure at all. What it enforces:
 
-- **invalid** — doesn't follow, or is false
-- **unjustified** — probably true, but a gap; here's what closes it
-- **imprecise** — right idea, the words don't say it
-- **stylistic** — fine, but there's a better way
+**It does not rewrite your proof.** Without the skill, Claude diagnoses the
+break and then writes out the corrected argument — on one test it did so twice
+in a single reply, leaving nothing for the author. The skill points at the route
+and stops. If you want the repair, you ask.
 
-Plus a hypothesis-usage audit — an unused hypothesis means your proof is wrong,
-or you've proved something stronger, and it's worth knowing which — and a
-degenerate-case sweep.
+**Every issue gets one of four labels** — **invalid** (doesn't follow, or is
+false), **unjustified** (probably true, but a gap), **imprecise** (right idea,
+wrong words), **stylistic**. Only the first means your proof is broken. Without
+labels a review reads as an undifferentiated list of complaints.
 
-It deliberately **does not rewrite your proof**, because the repair is the part
-with the learning in it. It offers.
+**A guarded hypothesis audit.** An unused hypothesis means your proof is wrong or
+proves something stronger. But the skill forbids saying "unused" until implicit
+use has been searched for — inside a cited theorem, inside an existential you
+wrote down, inside an unstated convergence assumption. An earlier version
+declared a hypothesis unused when the proof spent it implicitly, which is a
+false finding that sends you hunting for an error that isn't there.
+
+**No padding on a correct proof.** At most one item below "unjustified".
 
 > *"does this argument hold up? [pasted lemma from a thesis draft]"*
 
@@ -147,6 +161,48 @@ To use a single skill without the plugin, copy its directory into
 `.claude/skills/` in your project (the ones referencing
 `${CLAUDE_PLUGIN_ROOT}/references/proof-pitfalls.md` will need that file's path
 adjusted).
+
+## Evidence
+
+Each skill was run against realistic prompts alongside a baseline — the same
+prompt with no skill loaded — and both were graded blind against assertions
+fixed in advance, with a separate pass re-proving the mathematics independently.
+
+| Test | With skill | Baseline |
+|---|---|---|
+| office-hours — stuck on a qual problem | **5/5** | **1/5** |
+| office-hours — asked outright after three hours | **5/5** | **3/5** |
+| lecture — closed graph theorem, no leading question | **6/6** | **5/6** |
+| proof-review — false claim, memorised error | 6/6 | 5/6 |
+| proof-review — true claim, invalid proof | 6/6 | 5/6 |
+| proof-review — valid proof (false-positive control) | 5/5 | 5/5 |
+| problem-set — five compactness problems | 5/5 | 5/5 |
+
+Read the small numbers, not the average. `office-hours` is the one with a large,
+repeatable gap, and it is the skill asking for the behaviour the model least
+wants to produce. `problem-set` shows **no measured gap at all** — its real
+difference (solutions in a separate file, truth values withheld from the
+student) is something the rubric never learned to see, and the baseline
+satisfies "every problem is true" effortlessly by choosing five canonical
+theorems.
+
+Across three separate proof-review tests, the **baseline never once missed the
+error or misjudged whether the claim was true**, including on a non-famous flaw
+and on a correct proof. That result is why the skill contains no detection
+instructions.
+
+Two real defects were found in the skills' own output and fixed:
+
+- `problem-set` shipped a solutions file asserting that a flawed proof would
+  imply "every Hausdorff space in which closed sets are compact is normal" and
+  called that far too strong. Such a space *is* compact Hausdorff. The skill now
+  requires commentary to be verified like problem statements.
+- `proof-review` declared a hypothesis unused when the proof spent it implicitly.
+  The skill now forbids "unused" until implicit use has been ruled out.
+
+Honest limits: one run per cell, one model, a handful of prompts, and rubrics
+written by the same person who wrote the skills. These numbers show direction,
+not effect size. The raw runs and grading are not in this repo.
 
 ## Possible additions
 

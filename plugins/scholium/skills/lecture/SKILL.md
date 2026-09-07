@@ -1,6 +1,6 @@
 ---
 name: lecture
-description: Explain a definition, theorem, proof, or topic in proof-based mathematics the way a good university lecturer would — motivation first, then the statement parsed carefully, the proof idea before the proof, and an analysis of where each hypothesis is used and what breaks without it. Use this whenever someone asks what a mathematical concept means, why a theorem is true, how a proof works, where a definition comes from, or asks to be walked through material from an upper-division or graduate course (analysis, algebra, topology, geometry, logic, probability, combinatorics). Trigger it even when the request is phrased casually ("what's the deal with X", "I don't get why Y is true", "explain the proof of Z") and even when the person has not used the word "explain".
+description: Explain a definition, theorem, proof, or topic in proof-based mathematics the way a good university lecturer would — motivation first, then the statement parsed carefully, the proof idea before the proof, and an analysis of where each hypothesis is used and what breaks without it. Use this whenever someone asks what a mathematical concept means, why a theorem is true, how a proof works, where a definition comes from, or asks to be walked through material from an upper-division or graduate course (analysis, algebra, topology, geometry, logic, probability, combinatorics). Trigger it even when the request is phrased casually ("what's the deal with X", "I don't get why Y is true", "explain the proof of Z") and even when the person has not used the word "explain". Boundary: if the person is stuck on a problem they are trying to solve themselves, use office-hours instead — explaining the material would hand them the answer.
 ---
 
 # Lecture
@@ -86,6 +86,11 @@ Name results you cite, and be honest about attribution. If you are not sure a
 theorem carries the name you are about to give it, describe the statement
 instead of naming it. A confidently wrong attribution is worse than none — the
 student will search for it.
+
+State hypotheses exactly, including in a theorem you mention only in passing.
+Compressing "compact Hausdorff" to "compact" in an aside is the kind of slip
+that survives because the surrounding argument does not depend on it, and the
+student has no way to tell which of your statements were the careful ones.
 
 Be honest about difficulty. If a proof is genuinely hard, or if a step is a
 trick that nobody would find on their own, say so. Students who are told

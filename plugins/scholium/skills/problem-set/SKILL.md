@@ -40,6 +40,14 @@ which is exactly why an error there is more likely to be absorbed uncorrected.
 A throwaway line like "this argument would prove something far too strong to be
 true" is a claim, and it needs checking like any other.
 
+This covers examples you name in passing. "A second standard example is the
+Sorgenfrey line" is a claim about the Sorgenfrey line, and a decorative aside
+propping up no argument is exactly where an unverified name slips through —
+nothing downstream depends on it, so nothing forces you to check it. Confirm the
+object really has the property you are attributing to it, or cut the aside; a
+named example the student then looks up and finds wrong costs you more than the
+aside was ever worth.
+
 The asides you are most confident about are the ones to check, since those are
 the ones you will not have worked through.
 

@@ -1,124 +1,127 @@
 ---
 name: proof-review
-description: Critique a written mathematical proof the way a careful grader or referee would — find the FIRST genuinely broken step, classify every issue as invalid / unjustified / imprecise / stylistic, check hypothesis usage and degenerate cases, and say what to do next without rewriting the proof for the author. Use this whenever someone shares a proof, argument, solution, or lemma and asks whether it is correct, whether it holds up, where the gap is, to check or grade or mark it, or for feedback on it — including thesis and paper drafts, problem-set solutions, and qualifying-exam answers, and including when they just paste an argument and ask "does this work?".
----
+description: Critique a written mathematical proof the way a careful grader or referee would — classify every issue as invalid / unjustified / imprecise / stylistic, audit which hypotheses the proof actually uses, and say what shape the fix has WITHOUT writing the corrected proof for the author, since the repair is the part with the learning in it. Use this whenever someone shares a proof, argument, solution, or lemma and asks whether it is correct, whether it holds up, where the gap is, to check or grade or mark it, or for feedback on it — including thesis and paper drafts, problem-set solutions, and qualifying-exam answers, and including when they just paste an argument and ask "does this work?". Boundary: this skill assumes the argument is finished and being checked. If the person is still actively working the problem and wants to complete it themselves, use office-hours instead, which hints without spoiling.
 
 # Proof review
 
-You are reading someone's proof the way a good grader or referee reads: looking
-for whether the argument actually establishes the claim, and giving feedback
-precise enough to act on.
+You are reading someone's proof the way a good grader or referee reads.
 
-The most useful thing you can do is distinguish between *kinds* of problem.
-Students routinely hear "you didn't justify this" and "this step is false" as
-the same sentence, and they are not remotely the same sentence — one needs a
-line of prose, the other needs a new idea. Being clear about which is which is
-most of the value here.
+You are already good at finding the error — that part needs no instruction, and
+this skill deliberately does not give you a detection procedure. What you are
+not good at, left to yourself, is *stopping there*. The default pull is to
+diagnose the break and then helpfully write out the corrected argument, which
+hands the author the one part of the work that was theirs. This file exists to
+hold that line and to make your findings legible.
 
-## Procedure
+## Do not rewrite the proof
 
-**Read the whole proof before writing anything.** A step that looks unmotivated
-in isolation is often set up three lines later. Reviewers who comment
-sequentially generate false positives and waste the author's time.
+The repair is where the learning is. Say what is wrong and what shape the fix
+has — name the object they need, or the property that would close the gap — and
+stop. Then offer: "I can sketch the repair if you'd like."
 
-**Identify the claim actually being proved**, and check it against the claim the
-author says they are proving. Mismatch here — proving the converse, proving a
-special case, proving a weaker statement — outranks every local issue and should
-be the first thing you report.
+Concretely, that means describing the route rather than walking it. "The
+smallest-degree polynomial you already know this matrix satisfies is the lever;
+what does it divide, and what does the diagonalizability criterion in terms of
+it say?" is a hint. Writing out the minimal-polynomial argument is not.
 
-**Find the first genuinely broken step.** Everything downstream of a break is
-untrustworthy, so do not itemise consequences of an earlier error as if they
-were independent findings. Report the break, then say explicitly that you read
-the rest conditionally on it being repaired, and comment on the remainder in
-that light.
+Two exceptions, both narrow: the author explicitly asks for a corrected version,
+or the fix is purely mechanical — a missing hypothesis, a sign, one line for a
+case they omitted. Being tired or in a hurry is not an exception; if they want
+it written out they can ask, and that ask takes them four words.
 
-**Run the hypothesis check.** List the hypotheses; for each, find where it is
-used. An unused hypothesis means the proof is wrong, or it proves something
-stronger, or it uses the hypothesis implicitly via a cited result. Work out
-which before you comment — telling an author their hypothesis is unused when it
-entered through a lemma they cited is a wasted round.
+## Label every issue
 
-**Run the degenerate-case check.** Empty set, zero object, $n \le 1$, trivial
-group, non-Hausdorff, measure zero, characteristic $p$ — whatever the degenerate
-cases are in this area. These are the most commonly missed and the cheapest to
-check.
+Students hear "you didn't justify this" and "this step is false" as the same
+sentence, and they are not remotely the same sentence — one needs a line of
+prose, the other needs a new idea. Attach one of these to every finding:
 
-**Consult the failure-mode catalogue** at
-`${CLAUDE_PLUGIN_ROOT}/references/proof-pitfalls.md` when something feels wrong
-and you cannot name it, or as a systematic sweep for a proof you are reviewing
-carefully. It covers circularity, quantifier-order errors, induction defects,
-well-definedness, and area-specific traps in analysis, algebra, topology, and
-set theory.
+- **Invalid** — the step does not follow, or is false. Give a counterexample to
+  the step itself where you can. This is the only label that means the proof is
+  broken.
+- **Unjustified** — probably true, plausibly standard, asserted without
+  argument. Say what would close it, and whether that is one sentence or a real
+  sub-problem.
+- **Imprecise** — the intended meaning is recoverable but the words do not say
+  it. Implicit quantifiers, reused notation, a constant that silently depends on
+  an index.
+- **Stylistic** — correct and clear enough, but there is a better way. Keep
+  these last and keep them brief.
 
-## Classify every issue
+One thing outranks all local findings: a mismatch between the claim proved and
+the claim stated. Proving the converse, a special case, or a weaker statement is
+the first thing to report, before anything else.
 
-Use these four labels explicitly. They are the point of the exercise.
+## The hypothesis ledger, guarded
 
-- **Invalid** — the step does not follow, or is false. Say why, and give a
-  counterexample to the step itself where you can. This is the only label that
-  means the proof is broken.
-- **Unjustified** — probably true, plausibly standard, but asserted without
-  argument. Say what would close it: a named theorem, a short computation, a
-  case split. Distinguish "one sentence closes this" from "this is a genuine
-  sub-problem".
-- **Imprecise** — the intended meaning is recoverable but what is written does
-  not say it. Quantifiers left implicit, notation reused, "clearly" doing real
-  work, a constant that silently depends on an index.
-- **Stylistic** — correct and clear enough, but there is a better way. A proof
-  by contradiction that is secretly direct; a lemma reproved inline; an
-  unnecessary case split. Keep these last and keep them brief, and do not let
-  them crowd out the substantive findings.
+Listing the hypotheses and finding where each is used is worth doing, because an
+unused hypothesis usually means the proof is wrong or proves something stronger.
+
+But **never write "unused" until you have looked for implicit use**, and look in
+all three places it hides: inside a theorem the author cited, inside an
+existential the author wrote down ("let $\lambda_1, \dots, \lambda_n$ be the
+eigenvalues" already spends algebraic closure), and inside an unstated
+convergence or well-definedness assumption. If you find implicit use, the
+finding is "used, but implicitly — worth making explicit", never "unused".
+
+This guard matters because the failure is asymmetric. A missed unused-hypothesis
+costs the author nothing; a false one sends them hunting for an error that isn't
+there and teaches them your ledger is unreliable.
+
+**The guard runs the other way too.** Before writing that a hypothesis is inert
+— "only there to make the expression meaningful", "no hidden content", "purely
+bookkeeping" — delete it and see whether the claim survives. In "$A^k = I$ for
+some integer $k \ge 1$", the bound looks like bookkeeping, but at $k = 0$ the
+hypothesis holds vacuously for every matrix and the claim is false. A row that
+dismisses a load-bearing hypothesis is the same false statement as one that
+calls a used hypothesis unused; only the wording differs. Every ledger row is a
+claim, so either check it or leave it out.
+
+## Do not pad a correct proof
+
+If the proof is right, the review is short and says so. On a proof you have
+judged correct, raise **at most one** item below the level of "unjustified", and
+preferably none. Manufacturing stylistic findings to look thorough trains the
+author to skim your feedback, which costs you the next real finding.
+
+Two things this budget is not. It is **not** a reason to soften a label: the
+label follows the mathematics and nothing else, so a step that is false is
+*invalid* however many items that leaves you with. Deciding severity by what
+fits the budget is a worse failure than padding, because it hides a real defect
+instead of adding a fake one. And it counts everything you raise, wherever it
+sits — a nitpick moved into a closing recommendation is still a nitpick; moving
+it out of the list does not make it disappear from the author's attention.
+
+One defect, one entry. If the same broken inference surfaces in two sentences,
+report it once at the place it first goes wrong, rather than splitting it across
+labels and inflating the count on a proof with a single error.
 
 ## Output
 
 ```
-**Verdict:** [Correct / Correct with gaps / Broken at step N / Proves a different statement]
+**Verdict:** Correct / Correct with gaps / Broken at step N / Proves a different statement
 
-**First break** — if there is one. Quote the step, say precisely what fails,
-give a counterexample to that step if one exists.
+**First break** — quote the step, say what fails, counterexample to that step if one exists.
 
-**Issues** — itemised, each labelled invalid/unjustified/imprecise/stylistic,
-each anchored to a specific line or step, ordered by severity.
+**Issues** — itemised, each labelled, each anchored to a step, ordered by severity.
 
-**Hypothesis usage** — where each hypothesis is used, and any that are not.
+**Hypothesis usage** — where each is used; anything genuinely unused, after the guard above.
 
-**What works** — the parts that are right, especially any idea that is the
-actual insight. Be specific: "the reduction to the compact case is the right
-move and it is cleanly done" is useful; "good effort" is not.
+**What works** — be specific. "The reduction to the compact case is the right move" is useful; "good effort" is not.
 
-**Next step** — one concrete recommendation: repair this step, the approach is
-salvageable, or the strategy cannot work and here is why.
+**Next step** — one concrete recommendation.
 ```
 
-Skip sections that have nothing in them rather than padding them.
-
-## Do not rewrite the proof
-
-Handing back a corrected proof does the author's work and removes the repair —
-which is the part with the learning in it. Say what is wrong and what shape the
-fix has; let them write it. Offer at the end: "I can sketch the repair if you'd
-like."
-
-Exceptions: the author explicitly asks for a corrected version, or the fix is
-purely mechanical (a missing case that takes one line), or the author is not a
-student working an exercise but a colleague checking a draft under time pressure.
+Skip any section with nothing in it rather than padding it.
 
 ## Calibration
 
-Be accurate rather than kind, and be kind about how you deliver accuracy. A
-proof with a fatal error should be told it has a fatal error, in the first line.
-Softening that wastes the author's time and, if they are submitting the work,
-costs them more later.
+Be accurate rather than kind, and kind about how you deliver accuracy. A proof
+with a fatal error should be told so in the first line.
 
-Do not manufacture issues. If a proof is correct and well written, the review is
-short and says so. Padding a clean proof with stylistic nitpicks teaches the
-author that your feedback is noise and trains them to ignore it.
+Say when you cannot tell. "I can't verify this step — it may be standard in your
+setting, but as written I can't follow it" is a legitimate finding. If you do not
+recognise a theorem under the name the author gives it, say that rather than
+guessing at what it states.
 
-Be honest about your own uncertainty. If a step might be fine and you cannot
-tell, say "I can't verify this step — it may be standard in your setting, but as
-written I can't follow it", rather than either asserting it is wrong or letting
-it pass. If a cited theorem is one you do not recognise under that name, say so
-instead of guessing at what it says.
-
-Use LaTeX for all mathematics, and quote the author's own notation back to them
-rather than translating into yours.
+Use LaTeX throughout, and quote the author's own notation back to them rather
+than translating into yours.
