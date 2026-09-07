@@ -191,14 +191,33 @@ error or misjudged whether the claim was true**, including on a non-famous flaw
 and on a correct proof. That result is why the skill contains no detection
 instructions.
 
-Two real defects were found in the skills' own output and fixed:
+Six defects were found in the skills' own output and fixed. Each fix was
+re-tested, and the first three produced a smaller defect that only the re-test
+caught:
 
-- `problem-set` shipped a solutions file asserting that a flawed proof would
-  imply "every Hausdorff space in which closed sets are compact is normal" and
-  called that far too strong. Such a space *is* compact Hausdorff. The skill now
-  requires commentary to be verified like problem statements.
-- `proof-review` declared a hypothesis unused when the proof spent it implicitly.
-  The skill now forbids "unused" until implicit use has been ruled out.
+- `problem-set` asserted that a flawed proof would imply "every Hausdorff space
+  in which closed sets are compact is normal" and called that far too strong.
+  Such a space *is* compact Hausdorff, so the consequence is the theorem. Fixed
+  by requiring commentary to be verified like problem statements — after which
+  it name-dropped the **Sorgenfrey line** as a non-discrete locally compact
+  Hausdorff space that is not σ-compact. It is nowhere locally compact. Fixed
+  again, extending verification to named examples.
+- `proof-review` declared the complex-field hypothesis **unused** when the proof
+  spends it implicitly. Fixed by a guard — after which it dismissed `k ≥ 1` as
+  "no hidden content", which is the same false statement inverted: at `k = 0`
+  the hypothesis is vacuous and the claim fails. Fixed by making the guard
+  symmetric.
+- An anti-padding cap caused a false-as-stated finding to be **under-labelled**,
+  first as *unjustified*, then as *imprecise*. The real cause was a hole in the
+  taxonomy: the four labels describe steps, and a missing hypothesis is a defect
+  of the *claim*. Fixed by giving claim defects their own category.
+- One broken inference was **split across two labelled items**. Counting rules
+  kept leaking here — each closed one route and the pressure reappeared
+  elsewhere — so the rule is now a test with a truth value: would this still be
+  a defect after the invalid step is repaired?
+
+`lecture` also compressed "compact Hausdorff" to "compact" in a passing mention,
+and now requires hypotheses to be exact even in asides.
 
 Honest limits: one run per cell, one model, a handful of prompts, and rubrics
 written by the same person who wrote the skills. These numbers show direction,

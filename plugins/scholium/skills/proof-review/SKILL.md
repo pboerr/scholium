@@ -47,9 +47,20 @@ prose, the other needs a new idea. Attach one of these to every finding:
 - **Stylistic** — correct and clear enough, but there is a better way. Keep
   these last and keep them brief.
 
-One thing outranks all local findings: a mismatch between the claim proved and
-the claim stated. Proving the converse, a special case, or a weaker statement is
-the first thing to report, before anything else.
+These four describe **steps in the argument**. A defect in the *claim being
+proved* is a different animal, and forcing it into this taxonomy produces bad
+labels — a missing hypothesis is not a step being imprecise, it is the theorem
+being false as written. Report a defect of the claim separately and first, under
+its own heading: say the claim is false as stated, give the counterexample, and
+name the minimal repair.
+
+"This needs the word *nonempty*" belongs there, not in the issue list. So does a
+mismatch between the claim proved and the claim stated — proving the converse, a
+special case, or a weaker statement — which outranks every local finding.
+
+A defect of the claim never counts against the padding budget below. The budget
+exists to suppress low-value findings, and a theorem that is false as written is
+not one.
 
 ## The hypothesis ledger, guarded
 
@@ -58,9 +69,9 @@ unused hypothesis usually means the proof is wrong or proves something stronger.
 
 But **never write "unused" until you have looked for implicit use**, and look in
 all three places it hides: inside a theorem the author cited, inside an
-existential the author wrote down ("let $\lambda_1, \dots, \lambda_n$ be the
-eigenvalues" already spends algebraic closure), and inside an unstated
-convergence or well-definedness assumption. If you find implicit use, the
+existential the author wrote down ("choose a basis" spends choice in infinite
+dimensions; "let $\mathfrak{p}$ be a minimal prime" presumes the ring is
+nonzero), and inside an unstated convergence or well-definedness assumption. If you find implicit use, the
 finding is "used, but implicitly — worth making explicit", never "unused".
 
 This guard matters because the failure is asymmetric. A missed unused-hypothesis
@@ -91,14 +102,22 @@ instead of adding a fake one. And it counts everything you raise, wherever it
 sits — a nitpick moved into a closing recommendation is still a nitpick; moving
 it out of the list does not make it disappear from the author's attention.
 
-One defect, one entry. If the same broken inference surfaces in two sentences,
-report it once at the place it first goes wrong, rather than splitting it across
-labels and inflating the count on a proof with a single error.
+One defect, one entry — and there is a test for whether you actually have two.
+Before giving a finding its own label, ask whether it would still be a defect
+once the invalid step is repaired. If the repaired proof would not contain it,
+it was the same break described from another angle, and it belongs inside the
+first-break explanation rather than in the issue list. A genuinely separate
+defect survives the repair of the first one.
+
+Apply this rather than counting. Item structure should follow the mathematics,
+and a rule you can check has a truth value where a quota only has pressure.
 
 ## Output
 
 ```
-**Verdict:** Correct / Correct with gaps / Broken at step N / Proves a different statement
+**Verdict:** Correct / Correct with gaps / Broken at step N / Claim false as stated / Proves a different statement
+
+**Defect of the claim** — only if the statement itself is wrong: what is false, the counterexample, the minimal repair.
 
 **First break** — quote the step, say what fails, counterexample to that step if one exists.
 
