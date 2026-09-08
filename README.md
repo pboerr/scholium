@@ -51,7 +51,7 @@ The skills trigger on their own from context — you don't need to invoke them b
 name. Ask a question about a theorem and you get the lecture treatment; paste a
 proof and ask if it holds up and you get the review treatment.
 
-## The four skills
+## The five skills
 
 ### `lecture` — explain the material
 
@@ -132,6 +132,43 @@ you'll read them.
 
 > *"give me some practice on quotient topologies, I have quals in three weeks"*
 
+### `sanity-check` — is it even true?
+
+Before you prove it, try to break it. Enumerates degenerate and small cases
+looking for a counterexample — thirty seconds of search routinely settles what
+an hour of proof attempts would not.
+
+The bundled `probe.py` is **pure standard library**, because sympy and numpy are
+often simply absent and a probe that can't run is worse than none. It ships
+enumerators for small groups, labelled graphs, finite topologies, matrices over
+small entry sets, and exact rationals.
+
+```python
+search(lambda G: G.is_abelian(), some_groups(8), "all finite groups are abelian")
+# [all finite groups are abelian] FALSE - counterexample after 9 cases: D_3
+```
+
+Three disciplines make it trustworthy rather than reassuring:
+
+- **The result is never a proof.** It reports extent, and whether the family was
+  exhaustive: *"all 355 topologies on 4 points"* and *"a hand-built library of 13
+  groups"* are different evidence. The word "verified" is banned. The group
+  library is called `some_groups`, not `groups`, because a partial family that
+  reports like a complete one is the most dangerous thing in the box — testing
+  found it producing a clean green on a false claim while the poison test
+  certified the encoding as sound.
+- **The test must be able to fail.** The commonest way computational checking
+  misleads isn't a wrong answer, it's a predicate that's accidentally vacuous and
+  passes everything in silence. `must_fail` feeds it a known violation and raises
+  if nothing is caught. An exception in a predicate reports a broken harness, not
+  a passing case.
+- **It says when computation can't decide.** Every finite topological space is
+  compact, so a naive finite search will happily "confirm" false compactness
+  claims. `references/recipes.md` names the undecidable cases per area.
+
+> *"is it true that a group where every element squares to the identity is
+> abelian?"*
+
 ## The pitfalls catalogue
 
 `plugins/scholium/references/proof-pitfalls.md` is a shared reference the
@@ -154,7 +191,11 @@ scholium/
         ├── lecture/SKILL.md
         ├── office-hours/SKILL.md
         ├── proof-review/SKILL.md
-        └── problem-set/SKILL.md
+        ├── problem-set/SKILL.md
+        └── sanity-check/
+            ├── SKILL.md
+            ├── scripts/probe.py
+            └── references/recipes.md
 ```
 
 To use a single skill without the plugin, copy its directory into
@@ -177,6 +218,7 @@ fixed in advance, with a separate pass re-proving the mathematics independently.
 | proof-review — true claim, invalid proof | 6/6 | 5/6 |
 | proof-review — valid proof (false-positive control) | 5/5 | 5/5 |
 | problem-set — five compactness problems | 5/5 | 5/5 |
+| sanity-check — plausible false conjecture | **6/6** | **4/6** |
 
 Read the small numbers, not the average. `office-hours` is the one with a large,
 repeatable gap, and it is the skill asking for the behaviour the model least

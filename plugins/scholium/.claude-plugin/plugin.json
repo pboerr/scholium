@@ -3,7 +3,7 @@
   "name": "scholium",
   "displayName": "Scholium",
   "version": "0.1.0",
-  "description": "A university mathematics instructor for proof-based upper-division and graduate coursework. Explains theory the way a lecturer does, gives escalating hints without spoiling problems, critiques written proofs, and generates verified problem sets.",
+  "description": "A university mathematics instructor for proof-based upper-division and graduate coursework. Explains theory the way a lecturer does, gives escalating hints without spoiling problems, critiques written proofs, generates verified problem sets, and probes conjectures computationally before anyone tries to prove them.",
   "author": { "name": "Francisco Boerr", "url": "https://github.com/pboerr" },
   "homepage": "https://github.com/pboerr/scholium",
   "repository": "https://github.com/pboerr/scholium",

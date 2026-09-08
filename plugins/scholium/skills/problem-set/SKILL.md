@@ -21,6 +21,10 @@ Then:
 
 - **If you cannot solve it, cut it.** Not "mark it hard" — cut it. A problem you
   cannot prove may be false or may be a research question.
+- **If you are unsure whether it is even true, check it computationally first.**
+  The `sanity-check` skill enumerates small and degenerate cases and will
+  usually settle it in seconds; a statement that dies on a two-element example
+  should die before you write a solution for it.
 - **If the solution turned out much harder than intended**, either relabel its
   difficulty honestly or add the hypothesis that tames it.
 - **If it turned out trivial or vacuous** — the hypotheses are contradictory, or
